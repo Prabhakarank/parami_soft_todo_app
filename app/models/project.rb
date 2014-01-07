@@ -1,5 +1,13 @@
 class Project < ActiveRecord::Base
   has_many :tasks
-  has_and_belongs_to_many :developers, -> { where roles: 'developer' }, class_name: 'User'
-  accepts_nested_attributes_for :developers
+  has_and_belongs_to_many :users
+  accepts_nested_attributes_for :users
+
+  def get_users
+    users.pluck(:email).join(",")
+  end
+
+  def to_s
+    name
+  end
 end

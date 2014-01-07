@@ -4,7 +4,7 @@
     %meta{:charset => "utf-8"}
       %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
         %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-          %title= content_for?(:title) ? yield(:title) : "SlbShare"
+          %title= content_for?(:title) ? yield(:title) : "Prabha App"
           = csrf_meta_tags
           / Le HTML5 shim, for IE6-8 support of HTML elements
           /[if lt IE 9]
@@ -35,14 +35,21 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{:href => root_path} SLB Share
+          %a.navbar-brand{:href => root_path} Prabha App
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li.active
-              %a{:href => root_path} Home
-            %li
           %ul.nav.navbar-nav.pull-right
             - if current_user
+              - if current_user.admin?
+                %li.active
+                  %a{:href => "/home/admin"} Home
+                %li
+                  = link_to "New Project", new_project_path
+                %li
+                  = link_to "New Task", new_task_path
+              - else
+                %li.active
+                  %a{:href => "/home/developer"} Home
               %li
                 = link_to current_user.email.to_s + "(#{(current_user.roles || 'user')})", '/'
               %li
@@ -63,5 +70,5 @@
         #footer
           .container
             %p.text-muted.credit
-              Developed by & for Strata Labs
+              Developed by Prabha
     / /.container

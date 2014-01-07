@@ -1,0 +1,11 @@
+= simple_form_for(@task) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :name
+    = f.association :project
+    = f.association :user, :collection => User.developers
+    = f.input :state, :input_html => {:value => "new", :readonly => true }
+
+  .actions
+    = f.button :submit

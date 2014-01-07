@@ -1,0 +1,12 @@
+= simple_form_for(@project) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :name
+  = hidden_field_tag "project[user_ids][]", nil
+  - User.developers.all.each do |user|
+    = check_box_tag "project[user_ids][]", user.id, @project.user_ids.include?(user.id), id: dom_id(user)
+    = label_tag dom_id(user), user.name
+  %br
+  .actions
+    = f.button :submit

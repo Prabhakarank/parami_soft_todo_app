@@ -25,7 +25,19 @@ class User < ActiveRecord::Base
     end
   end
 
+  def User.developers
+    where(:roles => "developer")
+  end
+
+  def admin?
+    roles == 'admin'
+  end
+
   def name
+    email
+  end
+
+  def to_s
     email
   end
 end

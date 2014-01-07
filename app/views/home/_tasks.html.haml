@@ -1,0 +1,15 @@
+%table.table.stripped.hover
+  %th Description
+  %th State
+  %th Project
+  %th Action
+  - tasks.each do |task|
+    %tr
+      %td
+        = task.name
+      %td
+        = task.state
+      %td
+        = task.project.to_s
+      %td
+        = get_action_link(task)

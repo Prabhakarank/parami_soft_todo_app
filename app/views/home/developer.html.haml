@@ -1,0 +1,6 @@
+%h3 New Todo List
+= render :partial => "tasks", :object => @new_tasks
+%h3 In Progress Todo List
+= render :partial => "tasks", :object => @in_progress_tasks
+%h3 Completed Todo List
+= render :partial => "tasks", :object => @completed_tasks
