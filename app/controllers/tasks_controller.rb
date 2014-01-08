@@ -1,5 +1,12 @@
 class TasksController < ApplicationController
+  # reference: http://stackoverflow.com/questions/19273182/activemodelforbiddenattributeserror-cancan-rails-4-model-with-scoped-con
+  before_filter do
+    resource = controller_name.singularize.to_sym
+    method = "#{resource}_params"
+    params[resource] &&= send(method) if respond_to?(method, true)
+  end
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :except => :update_state
 
   # GET /tasks
   # GET /tasks.json

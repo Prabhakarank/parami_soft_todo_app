@@ -1,2 +1,61 @@
-%h1 Home#admin
-%p Find me in app/views/home/admin.html.haml
+= javascript_include_tag "https://www.google.com/jsapi"
+%h1 Admin Dashboard
+%h3 Report: Developer wise
+%table.table.table-bordered.table-hover.table-striped
+  %tr
+    %th
+      Status
+    - @dev_report.each do |report|
+      %th
+        = report[:dev]
+    - Task::AVAILABLE_STATUSES.each do |state|
+      %tr
+        %td
+          = state
+        - @dev_report.each do |report|
+          %td
+            = report[state]
+%h3 Report: Project wise
+%table.table.table-bordered.table-hover.table-striped
+  %tr
+    %th
+      Status
+    - @proj_report.each do |report|
+      %th
+        = report[:project]
+    - Task::AVAILABLE_STATUSES.each do |state|
+      %tr
+        %td
+          = state
+        - @proj_report.each do |report|
+          %td
+            = report[state]
+#chart_div{:style => "width: 300px; height: 300px"}
+:javascript
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    rows = #{@get_chart_data}
+    data.addRows(rows);
+
+    // Set chart options
+    var options = {'title':'Chart: Tasks',
+                   'width':400,
+                   'height':300};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }

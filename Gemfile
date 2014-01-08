@@ -49,7 +49,6 @@ gem "less-rails"
 gem "capistrano"
 
 gem "devise"
-gem 'omniauth-google-apps'
 
 gem 'haml-rails'
 gem "twitter-bootstrap-rails"
@@ -75,3 +74,4 @@ group :development, :test do
 end
 gem 'bootstrap_forms'
 gem 'chosen-rails'
+gem "cancan"

@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   skip_before_filter :verify_authenticity_token
   before_filter :authenticate_user!
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :notice => exception.message
+  end
+
   def after_sign_in_path_for(resource)
     if current_user.admin?
       "/home/admin"
